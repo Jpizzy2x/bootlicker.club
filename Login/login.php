@@ -15,7 +15,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->num_rows > 0) {
         $stmt->fetch();
         if (password_verify($password, $hashed_password)) {
-            echo "Login successful. Welcome, " . htmlspecialchars($username) . "!";
+            session_start();
+            $_SESSION['user_id'] = $user_id;
+            $_SESSION['username'] = $username;
+            
+           
+            header("Location: /Welcome/index.html");
+            exit();  
         } else {
             echo "Invalid username or password. <a href='index.html'>Try again</a>";
         }
